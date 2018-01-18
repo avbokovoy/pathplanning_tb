@@ -47,8 +47,9 @@ int32_t PathplanningRos::getPosition( const std::string& _robotPoseTopicName
     ROS_INFO( "-- y: %f", ( *robotPose ).pose.pose.position.y );
     
     //Converting to pathplanning coordinate system
-    this->m_ppStartPose->pose.position.x = ( *robotPose ).pose.pose.position.x + this->m_ppOccupancyGrid->info.origin.position.x;
-    this->m_ppStartPose->pose.position.y = ( *robotPose ).pose.pose.position.y + this->m_ppOccupancyGrid->info.origin.position.y;
+    //WARNING: Check if resolution >= 1
+    this->m_ppStartPose->pose.position.x = ( *robotPose ).pose.pose.position.x / this->m_ppOccupancyGrid->info.resolution + this->m_ppOccupancyGrid->info.origin.position.x;
+    this->m_ppStartPose->pose.position.y = ( *robotPose ).pose.pose.position.y / this->m_ppOccupancyGrid->info.resolution + this->m_ppOccupancyGrid->info.origin.position.y;
     ROS_INFO( "Robot position (pathplanning): " );
     ROS_INFO( "-- x: %f", this->m_ppStartPose->pose.position.x );
     ROS_INFO( "-- y: %f", this->m_ppStartPose->pose.position.y );
@@ -71,8 +72,9 @@ int32_t PathplanningRos::getGoal( const std::string& _goalMarkerTopicName
     ROS_INFO( "-- y: %f", ( *goalPose ).pose.position.y );
     
     // Converting goal position into pathplanning coordinate system
-    this->m_ppGoalPose->pose.position.x = ( *goalPose ).pose.position.x + this->m_ppOccupancyGrid->info.origin.position.x;
-    this->m_ppGoalPose->pose.position.y = ( *goalPose ).pose.position.y + this->m_ppOccupancyGrid->info.origin.position.y;
+    //WARNING: Check if resolution >= 1
+    this->m_ppGoalPose->pose.position.x = ( *goalPose ).pose.position.x / this->m_ppOccupancyGrid->info.resolution + this->m_ppOccupancyGrid->info.origin.position.x;
+    this->m_ppGoalPose->pose.position.y = ( *goalPose ).pose.position.y / this->m_ppOccupancyGrid->info.resolution + this->m_ppOccupancyGrid->info.origin.position.y;
     ROS_INFO( "Goal position (pathplanning): " );
     ROS_INFO( "-- x: %f", this->m_ppGoalPose->pose.position.x );
     ROS_INFO( "-- y: %f", this->m_ppGoalPose->pose.position.y );
@@ -191,18 +193,17 @@ int32_t PathplanningRos::drawPath( const std::string& _frameId )const
     
     //Creating vis markers for all the path points and forming MarkerArray with it. Converting coordinate system as well
     // Adding start point first
+    //WARNING: Check if resolution >= 1
     Utils::addMarker( visMarker
-                    , this->m_ppStartPose->pose.position.x - this->m_ppOccupancyGrid->info.origin.position.x
-                    , this->m_ppStartPose->pose.position.y - this->m_ppOccupancyGrid->info.origin.position.y );
+                    , ( this->m_ppStartPose->pose.position.x - this->m_ppOccupancyGrid->info.origin.position.x ) * this->m_ppOccupancyGrid->info.resolution
+                    , ( this->m_ppStartPose->pose.position.y - this->m_ppOccupancyGrid->info.origin.position.y ) * this->m_ppOccupancyGrid->info.resolution );
+   
     for( auto& midPoints : this->m_ppPathPoints )
     {
         Utils::addMarker( visMarker
-                        , midPoints.pose.position.x - this->m_ppOccupancyGrid->info.origin.position.x
-                        , midPoints.pose.position.y - this->m_ppOccupancyGrid->info.origin.position.y );
+                        , ( midPoints.pose.position.x - this->m_ppOccupancyGrid->info.origin.position.x ) * this->m_ppOccupancyGrid->info.resolution
+                        , ( midPoints.pose.position.y - this->m_ppOccupancyGrid->info.origin.position.y ) * this->m_ppOccupancyGrid->info.resolution );
     }
-    /*Utils::addMarker( visMarker
-                    , this->m_ppGoalPose->pose.position.x - this->m_ppOccupancyGrid->info.origin.position.x
-                    , this->m_ppGoalPose->pose.position.y - this->m_ppOccupancyGrid->info.origin.position.y );*/
     
     this->m_visualizationPublisher->publish( visMarker );
 }

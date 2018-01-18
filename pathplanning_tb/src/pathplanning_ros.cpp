@@ -12,7 +12,7 @@ PathplanningRos::PathplanningRos()
 , m_nodeHandler( new ros::NodeHandle )
 , m_visualizationPublisher( new ros::Publisher )
 {
-    //this->m_ppOccupancyGrid = std::shared_ptr<OccupancyGrid>( { 0 } );
+    this->m_ppOccupancyGrid->data = nullptr;
 }
 
 PathplanningRos::PathplanningRos( const ros::NodeHandle& _nodeHandler )
@@ -26,7 +26,10 @@ PathplanningRos::PathplanningRos( const ros::NodeHandle& _nodeHandler )
 
 PathplanningRos::~PathplanningRos()
 {
-    delete [] this->m_ppOccupancyGrid->data;
+    if( this->m_ppOccupancyGrid->data != nullptr )
+    {
+        delete [] this->m_ppOccupancyGrid->data;
+    }
 }
 
 int32_t PathplanningRos::getPosition( const std::string& _robotPoseTopicName

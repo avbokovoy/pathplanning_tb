@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(pathplanning_tb)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
+  visualization_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -136,7 +137,17 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/pathplanning_tb_node.cpp)
+add_executable(${PROJECT_NAME}_node 
+    src/pathplanning_tb_node.cpp
+    src/map.cpp
+    src/theta.cpp 
+    src/pathplanning_ros.cpp
+    
+  #  pathplanning_tb/map.h
+  #  pathplanning_tb/pathplanning_ros.hpp
+  #  pathplanning_tb/structs.h
+  #  pathplanning_tb/theta.h
+    )
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

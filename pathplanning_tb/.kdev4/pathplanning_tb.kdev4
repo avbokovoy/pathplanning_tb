@@ -1,3 +1,6 @@
+[Buildset]
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x1e\x00p\x00a\x00t\x00h\x00p\x00l\x00a\x00n\x00n\x00i\x00n\x00g\x00_\x00t\x00b)
+
 [Cppcheck]
 useSystemIncludes=true
 
@@ -13,3 +16,7 @@ Name=Clang
 [CustomDefinesAndIncludes][ProjectPath0][Includes]
 1=/opt/ros/kinetic/include
 2=/home/drone/Workspace/catkin_ws/devel/include
+3=/home/drone/Workspace/catkin_ws/src/pathplanning_tb/pathplanning_tb/include
+
+[Project]
+VersionControlSupport=kdevgit

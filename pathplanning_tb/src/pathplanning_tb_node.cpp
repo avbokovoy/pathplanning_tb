@@ -1,15 +1,52 @@
 #include <ros/ros.h>
 
+#include <pathplanning_tb/pathplanning_ros.hpp>
+
 #include <actionlib/client/simple_action_client.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <rns_msgs/MoveToAction.h>
 
+#include <pathplanning_tb/structs.h>
+#include <pathplanning_tb/map.h>
+#include <pathplanning_tb/theta.h>
+
 int main( int argc, char **argv )
 {
+    
+    ROS_INFO( "Initializing pathplanning_tb_node..." );
     ros::init( argc, argv, "pathplanning_tb" );
     
-    ROS_INFO( "Starting pathplanning_tb node." );
-    
+    ros::NodeHandle nh;
+    try
+    {
+        PathplanningTB::PathplanningRos ppRos(nh);
+        ppRos.getOccupancyMap( );
+        ppRos.getPosition( );
+        ppRos.getGoal( );
+        ppRos.setAgentSize( 1.0 );
+        ppRos.planPath();
+        ppRos.drawPath();
+        ppRos.execute();
+    }
+    catch( PathplanningTB::WaitForMessageTimeout& e )
+    {
+        ROS_ERROR( "%s", e.what() );
+    }
+    catch( PathplanningTB::AgentSizeLessThanZero& e )
+    {
+        ROS_ERROR( "%s", e.what() );
+    }
+    catch( PathplanningTB::PathNotFound& e )
+    {
+        ROS_WARN( "%s", e.what() );
+    }
+    catch( std::exception& e )
+    {
+        ROS_ERROR( "%s", e.what() );
+    }
+    //ppRos.execute();
+    //ROS_INFO( "Starting pathplanning_tb node." );
+    /*
     //Creating action client
     actionlib::SimpleActionClient< rns_msgs::MoveToAction > actionClient( "move_action", true );
     
@@ -69,7 +106,8 @@ int main( int argc, char **argv )
     {
         ROS_INFO( "Action timed out" );
     }
-    
+    */
+    //ros::shutdown();
     
     return 0;
 }

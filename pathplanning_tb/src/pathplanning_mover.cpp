@@ -18,6 +18,8 @@ RobotMover::RobotMover(const std::list<goalPose> _goalPoses)
 
 RobotMover::~RobotMover()
 {
+    this->m_actionClient->cancelAllGoals();
+    
 }
 
 int32_t RobotMover::executePath()
@@ -78,6 +80,7 @@ int32_t RobotMover::executePath()
         }
         else
         {
+            this->m_actionClient->cancelAllGoals();
             throw GoalExecutionFailed();
         }
     }

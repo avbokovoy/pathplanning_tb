@@ -185,7 +185,7 @@ int32_t PathplanningRos::drawPath( const std::string& _frameId )const
     visMarker.id                 = 0;
     visMarker.type               = visualization_msgs::Marker::LINE_STRIP;
     visMarker.action             = visualization_msgs::Marker::ADD;
-    visMarker.scale.x            = 0.1;
+    visMarker.scale.x            = this->m_ppOccupancyGrid->info.resolution;
     visMarker.color.a            = 1.0;
     visMarker.color.r            = 1.0;
     visMarker.color.g            = 0.0;

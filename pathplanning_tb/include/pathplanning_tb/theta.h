@@ -7,7 +7,7 @@
 class Theta
 {
     public:
-        Theta(){}
+        Theta(){ this->openSize = 0; }
         ~Theta(void){}
         SearchResult startSearch(const Map& map);
 

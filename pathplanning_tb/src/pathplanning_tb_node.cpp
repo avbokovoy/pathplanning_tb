@@ -26,7 +26,7 @@ int main( int argc, char **argv )
         ppRos.setAgentSize( 1.0 );
         ppRos.planPath();
         ppRos.drawPath();
-        ppRos.execute();
+        ppRos.executePath();
     }
     catch( PathplanningTB::WaitForMessageTimeout& e )
     {

@@ -208,7 +208,7 @@ int32_t PathplanningRos::drawPath( const std::string& _frameId )const
     this->m_visualizationPublisher->publish( visMarker );
 }
 
-int32_t PathplanningRos::execute()const
+int32_t PathplanningRos::executePath()const
 {
     //TODO: Complete and/or rename to robotFollowPath
     

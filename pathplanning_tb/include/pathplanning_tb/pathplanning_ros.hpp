@@ -60,7 +60,7 @@ namespace PathplanningTB
             // Drawing path in RViz
             int32_t drawPath( const std::string& _frameId = markerFrameId )const;
             //Main function
-            int32_t execute()const;
+            int32_t executePath( )const;
             
         private:
             // Pathplanning theta* related data
@@ -82,10 +82,6 @@ namespace PathplanningTB
             std::string                      m_mapDataTopicName;
             std::string                      m_goalMarkerTopicName;
             std::string                      m_robotPoseTopicName;
-            // Robot position in pathplanning coordinate system
-            
-            // Goal position in pathplanning coordinate system
-            
     };
     
     struct WaitForMessageTimeout : public std::exception

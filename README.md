@@ -59,3 +59,5 @@ $ catkin_make --pkg pathplanning_tb
 ```bash
 $ roslaunch pathplanning_tb test.launch
 ```
+# rns_msgs original repository
+https://github.com/sybotech/rns_msgs

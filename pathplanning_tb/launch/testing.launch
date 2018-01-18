@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>  
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="laser_link" args="0.0 0.0 0.0 0.0 0.0 0.0 /map /pathplanning_tb_path" />
+  
+  <node pkg="pathplanning_tb" type="pathplanning_tb_node" name = "pathplanning_tb_node" output="screen">
+  </node>
+</launch>

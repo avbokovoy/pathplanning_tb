@@ -142,6 +142,7 @@ add_executable(${PROJECT_NAME}_node
     src/map.cpp
     src/theta.cpp 
     src/pathplanning_ros.cpp
+    src/pathplanning_mover.cpp
     
   #  pathplanning_tb/map.h
   #  pathplanning_tb/pathplanning_ros.hpp

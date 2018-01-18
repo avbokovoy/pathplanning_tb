@@ -210,12 +210,37 @@ int32_t PathplanningRos::drawPath( const std::string& _frameId )const
 
 int32_t PathplanningRos::executePath()const
 {
-    //TODO: Complete and/or rename to robotFollowPath
+    try
+    {
+        std::list<goalPose> ppGoalPoses( this->m_ppPathPoints );
+        std::list<goalPose> goalPoses = convertGoalPosesFromPathplanningToRos( ppGoalPoses );
+        RobotMover robotMover( goalPoses );
+    
+        robotMover.executePath();
+    }
+    catch( GoalExecutionFailed& e )
+    {
+        throw e;
+    }
     
     return 0;
 }
 
-uint32_t PathplanningTB::Utils::addMarker( visualization_msgs::Marker& _inMarker, const float& _posX, const float& _posY )
+std::list<goalPose> PathplanningRos::convertGoalPosesFromPathplanningToRos(const std::list<goalPose>& _goalPoses)const
+{
+    std::list<goalPose> resultGoalPoses = _goalPoses;
+    
+    for( auto& poses : resultGoalPoses )
+    {
+        poses.pose.position.x = ( poses.pose.position.x - this->m_ppOccupancyGrid->info.origin.position.x ) * this->m_ppOccupancyGrid->info.resolution;
+        poses.pose.position.y = ( poses.pose.position.y - this->m_ppOccupancyGrid->info.origin.position.y ) * this->m_ppOccupancyGrid->info.resolution;
+    }
+    
+    return resultGoalPoses;
+}
+
+
+uint32_t Utils::addMarker( visualization_msgs::Marker& _inMarker, const float& _posX, const float& _posY )
 {
     geometry_msgs::Point tmpPoint;
     
@@ -226,6 +251,7 @@ uint32_t PathplanningTB::Utils::addMarker( visualization_msgs::Marker& _inMarker
     
     _inMarker.points.push_back( tmpPoint );
 }
+
 
 
 

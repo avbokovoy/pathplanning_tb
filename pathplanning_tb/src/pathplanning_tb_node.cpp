@@ -40,6 +40,10 @@ int main( int argc, char **argv )
     {
         ROS_WARN( "%s", e.what() );
     }
+    catch( PathplanningTB::GoalExecutionFailed& e )
+    {
+        ROS_ERROR( "%s", e.what() );
+    }
     catch( std::exception& e )
     {
         ROS_ERROR( "%s", e.what() );

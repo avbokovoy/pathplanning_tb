@@ -5,6 +5,8 @@
 #include <exception>
 #include <algorithm>
 
+#include <pathplanning_tb/pathplanning_mover.hpp>
+
 #include <pathplanning_tb/map.h>
 #include <pathplanning_tb/theta.h>
 #include <pathplanning_tb/structs.h>
@@ -82,6 +84,10 @@ namespace PathplanningTB
             std::string                      m_mapDataTopicName;
             std::string                      m_goalMarkerTopicName;
             std::string                      m_robotPoseTopicName;
+    
+            //Converts goal poses from pathplanning to ros data format
+            std::list<goalPose> convertGoalPosesFromPathplanningToRos( const std::list<goalPose>& _goalPoses )const;
+            
     };
     
     struct WaitForMessageTimeout : public std::exception
@@ -115,6 +121,7 @@ namespace PathplanningTB
         uint32_t addMarker( visualization_msgs::Marker& _inMarker
                           , const float&   _posX
                           , const float&   _posY );
+        
     }//namespace Utils
     
 }//namespace PathplanningTB

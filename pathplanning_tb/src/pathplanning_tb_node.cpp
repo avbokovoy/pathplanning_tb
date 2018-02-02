@@ -17,36 +17,40 @@ int main( int argc, char **argv )
     ros::init( argc, argv, "pathplanning_tb" );
     
     ros::NodeHandle nh;
-    try
+    
+    while( ros::ok() )
     {
-        PathplanningTB::PathplanningRos ppRos(nh);
-        ppRos.getOccupancyMap( );
-        ppRos.getPosition( );
-        ppRos.getGoal( );
-        ppRos.setAgentSize( 1.0 );
-        ppRos.planPath();
-        ppRos.drawPath();
-        ppRos.executePath();
-    }
-    catch( PathplanningTB::WaitForMessageTimeout& e )
-    {
-        ROS_ERROR( "%s", e.what() );
-    }
-    catch( PathplanningTB::AgentSizeLessThanZero& e )
-    {
-        ROS_ERROR( "%s", e.what() );
-    }
-    catch( PathplanningTB::PathNotFound& e )
-    {
-        ROS_WARN( "%s", e.what() );
-    }
-    catch( PathplanningTB::GoalExecutionFailed& e )
-    {
-        ROS_ERROR( "%s", e.what() );
-    }
-    catch( std::exception& e )
-    {
-        ROS_ERROR( "%s", e.what() );
+        try
+        {
+            PathplanningTB::PathplanningRos ppRos(nh);
+            ppRos.getOccupancyMap( );
+            ppRos.getPosition( );
+            ppRos.getGoal( );
+            ppRos.setAgentSize( 5.0 );
+            ppRos.planPath();
+            ppRos.drawPath();
+            ppRos.executePath();
+        }
+        catch( PathplanningTB::WaitForMessageTimeout& e )
+        {
+            ROS_ERROR( "%s", e.what() );
+        }
+        catch( PathplanningTB::AgentSizeLessThanZero& e )
+        {
+            ROS_ERROR( "%s", e.what() );
+        }
+        catch( PathplanningTB::PathNotFound& e )
+        {
+            ROS_WARN( "%s", e.what() );
+        }
+        catch( PathplanningTB::GoalExecutionFailed& e )
+        {
+            ROS_ERROR( "%s", e.what() );
+        }
+        catch( std::exception& e )
+        {
+            ROS_ERROR( "%s", e.what() );
+        }
     }
    
     return 0;

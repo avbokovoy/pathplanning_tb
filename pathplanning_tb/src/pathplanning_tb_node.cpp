@@ -26,10 +26,10 @@ int main( int argc, char **argv )
             ppRos.getOccupancyMap( );
             ppRos.getPosition( );
             ppRos.getGoal( );
-            ppRos.setAgentSize( 5.0 );
-            ppRos.planPath();
+            ppRos.setAgentSize( 0 );
+            ppRos.planPath( true );
             ppRos.drawPath();
-            ppRos.executePath();
+            //ppRos.executePath();
         }
         catch( PathplanningTB::WaitForMessageTimeout& e )
         {

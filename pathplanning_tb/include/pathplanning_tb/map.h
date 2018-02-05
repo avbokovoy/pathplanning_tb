@@ -13,7 +13,7 @@ class Map
     public:
         Map();
         ~Map(){}
-        void initialize(const OccupancyGrid& grid);
+        void initialize(const OccupancyGrid& grid, const bool& _planInUnknownMap = false);
         void setStartPos(const sPosition& start);
         void setGoalPos(const sPosition& goal);
         bool isObstacle(int i, int j) const;

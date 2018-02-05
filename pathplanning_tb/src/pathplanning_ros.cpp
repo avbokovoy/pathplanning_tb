@@ -146,11 +146,11 @@ int32_t PathplanningTB::PathplanningRos::setAgentSize(const float& _agentSize)
 }
 
 
-int32_t PathplanningRos::planPath()
+int32_t PathplanningRos::planPath( const bool& _planInUnknownSpace )
 {
     ROS_INFO( "Starting pathplanning algorithm" );
     ROS_INFO( "Initializing map..." );
-    this->m_ppMap->initialize  ( ( *this->m_ppOccupancyGrid ) );
+    this->m_ppMap->initialize  ( ( *this->m_ppOccupancyGrid ), _planInUnknownSpace );
     this->m_ppMap->setStartPos ( this->m_ppStartPose->pose.position );
     this->m_ppMap->setGoalPos  ( this->m_ppGoalPose->pose.position );
     this->m_ppMap->setAgentSize( this->m_ppAgentSize );

@@ -58,7 +58,7 @@ namespace PathplanningTB
             // Setting agent size
             int32_t setAgentSize( const float& _agentSize = 1.0 );
             // Executes pathplanning algorithm
-            int32_t planPath();
+            int32_t planPath( const bool& _planInUnknownSpace = false );
             // Drawing path in RViz
             int32_t drawPath( const std::string& _frameId = markerFrameId )const;
             //Main function

@@ -27,15 +27,6 @@ class ogToGmConverter
             
             nav_msgs::OccupancyGrid tmpOccupancyGrid( _msg );
             
-            //Scale down
-            /*for( unsigned int i = 0; i < tmpOccupancyGrid.info.width * tmpOccupancyGrid.info.height - 1; ++i )
-            {
-                if( tmpOccupancyGrid.data[i] != -1 )
-                {
-                    tmpOccupancyGrid.data[i] = tmpOccupancyGrid.data[i] / 100.0;
-                }
-            }*/
-            
             //Convert to GridMap
             grid_map::GridMap tmpGridMap;
             grid_map::GridMapRosConverter::fromOccupancyGrid( tmpOccupancyGrid, this->m_layer, tmpGridMap );

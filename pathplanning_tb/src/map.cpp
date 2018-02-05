@@ -12,7 +12,7 @@ Map::Map()
     agentSize = 1;
 }
 
-void Map::initialize(const OccupancyGrid &grid)
+void Map::initialize(const OccupancyGrid &grid, const bool& _planInUnknowMap)
 {
     height = grid.info.height;
     width = grid.info.width;
@@ -21,12 +21,24 @@ void Map::initialize(const OccupancyGrid &grid)
     for(int i = 0; i < height; i++)
         Grid[i].resize(width);
     int k(0);
-    for(int i = 0; i < height; i++)
-        for(int j = 0; j < width; j++)
-        {
-            Grid[i][j] = bool(grid.data[k] == -1 || grid.data[k]>=50);
-            k++;
-        }
+    if( !_planInUnknowMap )
+    {
+        for(int i = 0; i < height; i++)
+            for(int j = 0; j < width; j++)
+            {
+                Grid[i][j] = bool(grid.data[k] == -1 || grid.data[k]>=50);
+                k++;
+            }
+    }
+    else
+    {
+        for(int i = 0; i < height; i++)
+            for(int j = 0; j < width; j++)
+            {
+                Grid[i][j] = bool( grid.data[k]>=50);
+                k++;
+            }
+    }
     return;
 }
 
